@@ -1,7 +1,7 @@
 import React from 'react'
-import Winter from './section-one/Winter'
-import Discover from './section-two/Discover'
-import Recommended from './section-three/Recommended'
+import Winter from './winter/Winter'
+import Discover from './discover/Discover'
+import Recommended from './recommended/Recommended'
 import './Home.scss'
 function Home() {
   return (
