@@ -118,6 +118,9 @@
   &__submit:hover{
     background: #897CFF;
   }
+  &__phone__input{
+    outline: none;
+  }
   .modal.active {
     display: block;
   }

@@ -8,14 +8,5 @@
     color: var(--Black, #141414);
     font-size: 48px;
   }
-  &__cards{
-    margin-top: 72px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  &__card{
-    width: 282px;
-    height: 282px;
-  }
+  
 }

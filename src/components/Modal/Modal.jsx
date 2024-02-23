@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import './Modal.scss';
 import styles from './PhoneStyle.css'
 import close from '../../assets/close.svg';
 import peopleSvg from '../../assets/people (2).png' 
-
-const Modal = ({ active, setActive, children }) => {
+import BookedModal from '../BookedModal/BookedModal';
+ 
+const Modal = ({ active, setActive,  }) => {
   const [count, setCount] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [open,setOpen]=useState(false)
+  const handelCloseClick =()=>{
+    setActive(false)
+    setOpen(true)
+   
+  }
   
   const intl = {
     'KZ': '+7',
@@ -29,9 +36,12 @@ const Modal = ({ active, setActive, children }) => {
       setCount(count - 1);
     }
   };
- 
+  
   return (
-    <div className={`modal ${active ? 'active' : ''}`}>
+    <>
+    
+    {active && (
+      <div className={`modal ${active ? 'active' : ''}`}>
       <div className="modal__overlay" onClick={() => setActive(false)}>
         <div className="modal__content" onClick={(e) => e.stopPropagation()}>
           <div className="modal__info">
@@ -59,8 +69,7 @@ const Modal = ({ active, setActive, children }) => {
                 international
                 intl={intl}
                 inputStyle={styles.PhoneInputInput}
-                buttonStyle={styles.PhoneInputCountryIcon}
-                dropdownStyle={styles.PhoneInputCountry}/>
+                />
                </div>
           </div>
           <div className="modal__commentari">
@@ -78,10 +87,13 @@ const Modal = ({ active, setActive, children }) => {
                <p className='modal__people__p'>{count} People</p>
             </div>
           </div>
-          <button className='modal__submit' type='button'>Submit</button>
+          <button className='modal__submit' type='button' onClick={() => handelCloseClick()}  >Submit</button>
         </div>
       </div>
-    </div>
+    </div>)}
+    {open &&   <BookedModal/> }
+    </>
+    
   );
 };
 

@@ -1,19 +1,56 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react'
+import { useParams } from "react-router-dom";
+import axios from 'axios'
 import Modal from '../../components/Modal/Modal';
 import './OneTour.scss'
 import mon from './Rectangle 38.png'
 import arrow from '../home/winter/winter-img/Arrow 1.svg'
 import location from './u_map-marker.svg' 
 function OneTour() {
-  const navigate = useNavigate();
+  const [tripData, setTripData] = useState(null);
+  const [error, setError] = useState(null);
+ const navigate = useNavigate();
   const handleClick = ()=>{
     navigate('/')
   }
-  const [ModalActive, SetModalActive]=useState (true)
+ 
+  const [ModalActive, SetModalActive]=useState (false)
+  useEffect(() => {
+    // Пример: Получение данных для нескольких id (1, 2, 3)
+    const ids = [1, 2, 3];
+
+    const fetchDataForIds = async () => {
+      try {
+        const promises = ids.map(async (id) => {
+          const response = await axios.get(`https://phobic-honey-production.up.railway.app/api/trips/${id}`);
+          return response.data;
+        });
+
+        // Дождитесь выполнения всех запросов и установите данные
+        const dataForIds = await Promise.all(promises);
+        setTripData(dataForIds);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+ console.log(ids);
+    fetchDataForIds();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!tripData) {
+    return <div>Loading...</div>;
+  }
+
+ 
   return (
     <div className='onetour'>
+      
       <img src={mon} alt=""  className='onetour__img'/>
       <button className='onetour__btn' onClick={handleClick}>
         <img src={arrow} alt=""  className='onetour__arrow'/>

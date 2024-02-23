@@ -1,22 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import RecommendedTrips from '../../../components/RecommendedCard/RecommendetCard'
 import './Recommended.scss'
-import image from './Frame 32.png'
 function Recommended() {
+  
   return (
     <div className='recommended'>
         <div className="recommended__container">
             <p className='recommended__p'>Recommended</p>
-            <div className="recommended__cards">
-                <div className="recommended__card">
-                    <img src={image} alt="" />
-                </div>
-                <div className="recommended__card">
-                    <img src={image} alt="" />
-                </div>
-                <div className="recommended__card">
-                    <img src={image} alt="" />
-                </div>
-            </div>
+                   <RecommendedTrips/>
+                
         </div>
     </div>
   )
