@@ -7,14 +7,13 @@ import close from '../../assets/close.svg';
 import peopleSvg from '../../assets/people (2).png' 
 import BookedModal from '../BookedModal/BookedModal';
  
-const Modal = ({ active, setActive,  }) => {
+const Modal = ({ active, setActive}) => {
   const [count, setCount] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState('')
   const [open,setOpen]=useState(false)
   const handelCloseClick =()=>{
-    setActive(false)
-    setOpen(true)
-   
+    setActive(false);
+    setOpen(true);
   }
   
   const intl = {
@@ -23,9 +22,7 @@ const Modal = ({ active, setActive,  }) => {
     'KG': '+996',
   };
 
-  if (!active) {
-    return null;
-  }
+ 
 
   const increment = () => {
     setCount(count + 1);
@@ -91,7 +88,7 @@ const Modal = ({ active, setActive,  }) => {
         </div>
       </div>
     </div>)}
-    {open &&   <BookedModal/> }
+    {open &&   <BookedModal /> }
     </>
     
   );
