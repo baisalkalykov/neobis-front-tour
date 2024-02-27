@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {  useNavigate } from 'react-router-dom';
 import arrow from './discover-img/arrow (2).png';
 import './Discover.scss';
@@ -12,10 +13,10 @@ function Discover() {
   const tabs = ['Popular', 'Featured', 'MostVisited', 'Europe', 'Asia'];
   const [active, setActive] = useState('Popular');
   const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('onetour:id');
-  };
+   const handleClick =()=>{
+    navigate('onetiur/${id}')
+   }
+  
    const handleActiveClick =(tab)=>{
     setActive(tab)
     console.log(tab);
@@ -53,10 +54,11 @@ function Discover() {
             </li>
           ))}
         </div>
-
-        <div className="discover__cards" onClick={handleClick}>
+        <Link to={handleClick}>
+        <div className="discover__cards" >
           {cardsData[active]}
         </div>
+        </Link>
       </div>
     </div>
   );

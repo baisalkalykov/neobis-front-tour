@@ -9,44 +9,15 @@ import mon from './Rectangle 38.png'
 import arrow from '../home/winter/winter-img/Arrow 1.svg'
 import location from './u_map-marker.svg' 
 function OneTour() {
-  const [tripData, setTripData] = useState(null);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
  const navigate = useNavigate();
   const handleClick = ()=>{
     navigate('/')
-  }
- 
+  } 
+
   const [ModalActive, SetModalActive]=useState (false)
-  useEffect(() => {
-    // Пример: Получение данных для нескольких id (1, 2, 3)
-    const ids = [1, 2, 3];
-
-    const fetchDataForIds = async () => {
-      try {
-        const promises = ids.map(async (id) => {
-          const response = await axios.get(`https://phobic-honey-production.up.railway.app/api/trips/${id}`);
-          return response.data;
-        });
-
-        // Дождитесь выполнения всех запросов и установите данные
-        const dataForIds = await Promise.all(promises);
-        setTripData(dataForIds);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
- console.log(ids);
-    fetchDataForIds();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!tripData) {
-    return <div>Loading...</div>;
-  }
-
+  
  
   return (
     <div className='onetour'>
