@@ -9,30 +9,38 @@ import peopleSvg from '../../assets-images/people (2).png'
 import BookedModal from '../BookedModal/BookedModal';
 import axios from 'axios';
 
-const Modal = ({ active, setActive}) => {
+const Modal = ({ active, setActive,id}) => {
   const [count, setCount] = useState(0);
-  const [number, setNumber] = useState('')
   const [open,setOpen]=useState(false)
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+ 
   const onSubmit = async (data) => {
+   
+    const newData={
+      "tripId": `${id}`,
+      "phoneNumber": data.phoneNumber,
+      "numberOfPeople": data.numberOfPeople,
+      "comment": data.comment
+    }
+    console.log(newData);
     try {
       // Отправка данных на сервер
-      const response = await axios.post('https://phobic-honey-production.up.railway.app/api/bookings/book', data);
+      const response = await axios.post('https://phobic-honey-production.up.railway.app/api/bookings/book', newData);
 
       // Если запрос успешен, открываем BookedModal
       if (response.status === 200) {
+        setActive(false)
         setOpen(true);
       }
     } catch (error) {
       console.error('Ошибка при отправке данных:', error);
     }
+    
   };
-  const [tempNumberOfPeople, setTempNumberOfPeople] = useState(0);
  
   
   return (
@@ -96,10 +104,10 @@ const Modal = ({ active, setActive}) => {
           <div className="modal__people">
             <div className="modal__people__count">
             <Controller
-        name="numberOfPeople"
-        control={control}
-        defaultValue={0}
-        render={({ field }) => (
+             name="numberOfPeople"
+             control={control}
+             defaultValue={0}
+             render={({ field }) => (
           <div className="modal__people__count">
             <button
               className='modal__people__btn'

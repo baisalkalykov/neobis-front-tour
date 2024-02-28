@@ -59,7 +59,7 @@ function OneTour() {
             Book now
           </button>
         </div>
-        <Modal active={ModalActive} setActive={SetModalActive} />
+        <Modal active={ModalActive} setActive={SetModalActive} id={id} />
       </div>
     </div>
   );
