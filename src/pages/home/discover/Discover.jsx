@@ -1,33 +1,42 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {  useNavigate } from 'react-router-dom';
-import arrow from './discover-img/arrow (2).png';
+import arrow from '../../../assets-images/arrow (2).png';
 import './Discover.scss';
-import PopularCard from '../../../components/PopularCard/PopularCard';
-import FeaturedCard from '../../../components/FeaturedCard/FeaturedCard';
-import MostVisitedcard from '../../../components/MostVisited/MostVisitedcard';
-import EuropeCard from '../../../components/Europe/EuropeCard';
-import AsiaCard from '../../../components/Asia/AsiaCard';
+import DiscoverCard from '../../../components/DiscoverCard/DiscoverCard';
+
 
 function Discover() {
-  const tabs = ['Popular', 'Featured', 'MostVisited', 'Europe', 'Asia'];
+  const tabs= [
+    {
+    viewTab:'Popular',
+    postTab:'popular'
+
+  },
+  {
+    viewTab:'Featured',
+    postTab:'featured',
+  }, 
+  {
+    viewTab:'MostVisited',
+    postTab:'most-visited',
+  },
+   {
+    viewTab:'Europe',
+    postTab:'europe'
+  },
+  {
+    viewTab:'Asia',
+    postTab:'asia'
+  }
+]
+
+ const [category,setCategory]= useState('popular')
   const [active, setActive] = useState('Popular');
-  const navigate = useNavigate();
-   const handleClick =()=>{
-    navigate('onetiur/${id}')
-   }
-  
+
    const handleActiveClick =(tab)=>{
-    setActive(tab)
-    console.log(tab);
+    setActive(tab.viewTab)
+    setCategory(tab.postTab)
    }
-  const cardsData = {
-    Popular: <PopularCard key="popularCard" />,
-    Featured: <FeaturedCard key="featuredCard" />,
-    MostVisited: <MostVisitedcard key="mostVisitedCard" />,
-    Europe: <EuropeCard key="europeCard" />,
-    Asia: <AsiaCard key="asiaCard" />,
-  };
+   
   return (
     <div className='discover'>
       <div className="discover__container">
@@ -43,22 +52,19 @@ function Discover() {
           </div>
         </div>
         <div className="discover__list" >
-          {tabs.map((tab) => (
+          {tabs.map((tab,idx) => (
             <li
-              key={tab}
-              className={`discover__list__li ${active === tab ? 'active' : ''}`}
+              key={idx}
+              className={`discover__list__li ${active === tab.viewTab ? 'active' : ''}`}
               onClick={()=>handleActiveClick(tab)}
-              style={{ color: active === tab ? '#6A62B7' : 'black' }}
+              style={{ color: active === tab.viewTab ? '#6A62B7' : 'black' }}
             >
-              {tab}
+              {tab.viewTab}
             </li>
           ))}
         </div>
-        <Link to={handleClick}>
-        <div className="discover__cards" >
-          {cardsData[active]}
-        </div>
-        </Link>
+        
+        <DiscoverCard category={category} />
       </div>
     </div>
   );

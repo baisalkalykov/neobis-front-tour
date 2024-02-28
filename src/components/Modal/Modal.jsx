@@ -1,46 +1,47 @@
 import  { useState } from 'react';
+import {useForm,Controller } from 'react-hook-form'
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import './Modal.scss';
 import styles from './PhoneStyle.css'
-import close from '../../assets/close.svg';
-import peopleSvg from '../../assets/people (2).png' 
+import close from '../../assets-images/close.svg';
+import peopleSvg from '../../assets-images/people (2).png' 
 import BookedModal from '../BookedModal/BookedModal';
- 
+import axios from 'axios';
+
 const Modal = ({ active, setActive}) => {
   const [count, setCount] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState('')
+  const [number, setNumber] = useState('')
   const [open,setOpen]=useState(false)
-  const handelCloseClick =()=>{
-    setActive(false);
-    setOpen(true);
-  }
-  
-  const intl = {
-    'KZ': '+7',
-    'RU': '+7',
-    'KG': '+996',
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
- 
+  const onSubmit = async (data) => {
+    try {
+      // Отправка данных на сервер
+      const response = await axios.post('https://phobic-honey-production.up.railway.app/api/bookings/book', data);
 
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
+      // Если запрос успешен, открываем BookedModal
+      if (response.status === 200) {
+        setOpen(true);
+      }
+    } catch (error) {
+      console.error('Ошибка при отправке данных:', error);
     }
   };
+  const [tempNumberOfPeople, setTempNumberOfPeople] = useState(0);
+ 
   
   return (
     <>
     
     {active && (
       <div className={`modal ${active ? 'active' : ''}`}>
-      <div className="modal__overlay" onClick={() => setActive(false)}>
-        <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal__overlay" >
+        <form className='modal__content' onSubmit={handleSubmit(onSubmit)}  >
           <div className="modal__info">
             <p className='modal__info_p'>Info</p>
             <img src={close} alt="" className='modal__close' 
@@ -58,37 +59,82 @@ const Modal = ({ active, setActive}) => {
           <div className="modal__phone">
             <p className="modal__phone-p">Phone number</p>
             <div className="modal__input">
-            < PhoneInput className='modal__phone__input'
+            <Controller
+              name="phoneNumber"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+              <PhoneInput
+                className='modal__phone__input'
                 placeholder="_ _ _ _ _ _ _ _ _"
-                value={phoneNumber}
-                onChange={setPhoneNumber}
+                value={field.value}
+                onChange={(value) => field.onChange(value)}
                 countries={['KZ', 'RU', 'KG']}
                 international
-                intl={intl}
-                inputStyle={styles.PhoneInputInput}
-                />
+              />
+            )}
+          />
                </div>
           </div>
           <div className="modal__commentari">
             <p className="modal__phone-p">Commentaries to trip</p>
-            <input type="text" placeholder='Write your wishes to trip...' className='modal__commentari__in' />
+            <Controller
+              name="comment"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+            <input 
+              type="text" 
+              placeholder='Write your wishes to trip...'
+              className='modal__commentari__in'
+              value={field.value}
+            onChange={(e) => field.onChange(e.target.value)} />
+            )}
+            />
+            
           </div>
           <div className="modal__people">
             <div className="modal__people__count">
-            <button className='modal__people__btn' onClick={decrement}>-</button>
-              <p>{count}</p>
-              <button className='modal__people__btn' onClick={increment}>+</button>
+            <Controller
+        name="numberOfPeople"
+        control={control}
+        defaultValue={0}
+        render={({ field }) => (
+          <div className="modal__people__count">
+            <button
+              className='modal__people__btn'
+              type="button"
+              onClick={() => field.onChange(field.value - 1)}
+            >
+              -
+            </button>
+            <p>{field.value}</p>
+            <button
+              className='modal__people__btn'
+              type="button"
+              onClick={() => field.onChange(Math.min(field.value + 1, 6))}
+            >
+              +
+            </button>
+            <input type="hidden" {...field} />
+          </div>
+        )}
+      />
+            
             </div>
             <div className="modal__people__len">
               <img src={peopleSvg} alt="" className='modal__people__svg'/>
                <p className='modal__people__p'>{count} People</p>
             </div>
           </div>
-          <button className='modal__submit' type='button' onClick={() => handelCloseClick()}  >Submit</button>
-        </div>
+          <button className='modal__submit' 
+           type='submit'>
+            Submit
+            </button>
+        </form>
       </div>
     </div>)}
-    {open &&   <BookedModal /> }
+    {open &&   <BookedModal setOpen={setOpen} /> }
     </>
     
   );

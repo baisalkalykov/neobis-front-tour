@@ -1,17 +1,16 @@
 import React from 'react'
 import  { useState } from 'react';
 import './BookedModal.scss'
-function BookedModal() {
-    const [newModal,setnewModal] = useState(true)
-    const handleCloseModal = (e) => {
-      e.stopPropagation();
-      setnewModal(false);
+function BookedModal({setOpen}) {
+    
+    const handleCloseModal = () => {
+      setOpen(false);
     };
   return (
-    <div className={`modal ${newModal ? 'active' : ""  }`}  >
+    <div className={`modal `}  >
      <div className="booked" >
       <p className='booked__p'>Your trip has been booked!</p>
-      <button type='button' onClick={(e) => handleCloseModal(e)} className='booked__btn'>Ok</button>
+      <button type='button' onClick={ handleCloseModal} className='booked__btn'>Ok</button>
      </div>
   </div>
 

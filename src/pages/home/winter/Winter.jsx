@@ -1,9 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import boy from './winter-img/boy-it.png'
-import arrow from './winter-img/Arrow 1.svg'
+import boy from '../../../assets-images/boy-it.png'
+import arrow from '../../../assets-images/Arrow 1.svg'
 import './Winter.scss'
-import Discover from '../discover/Discover'
 function Winter() {
   
   return (
