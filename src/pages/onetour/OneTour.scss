@@ -64,7 +64,26 @@
    }
    &__reviews{
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
    }
+   &__reviews-card{
+    margin: 24px 0;
+   }
+   &__reviews-card-title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+   }
+   &__reviews-card-img{
+    width: 24px;
+    height: 24px;
+   }
+   &__reviews-card-p{
+    font-size: 18px;
+   }
+  
    &__btns{
     width: 1000px;
     height: 64px;

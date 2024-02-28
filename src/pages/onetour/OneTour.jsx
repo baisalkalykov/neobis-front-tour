@@ -7,9 +7,10 @@ import Modal from '../../components/Modal/Modal';
 import './OneTour.scss'
 import arrow from '../../assets-images/Arrow 1.svg'
 import location from './u_map-marker.svg' 
+import woonam from '../../assets-images/wooman.png'
+
 function OneTour() {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [ModalActive, SetModalActive] = useState(false);
@@ -52,7 +53,19 @@ function OneTour() {
           <div className="onetour__reviews">
             <p className='onetour__description__p'>Reviews</p>
             <div className="onetour__reviews-card">
-              
+               <div className="onetour__reviews-card-title">
+                <img src={woonam} alt="woonam"  className='onetour__reviews-card-img'/>
+                 <p className='onetour__reviews-card-p'>Anonymous</p>
+               </div>
+               <p className='onetour__reviews-card-text'>That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to <br />
+                take warm coat</p>
+            </div>
+            <div className="onetour__reviews-card">
+               <div className="onetour__reviews-card-title">
+                <img src={woonam} alt="woonam"  className='onetour__reviews-card-img'/>
+                 <p className='onetour__reviews-card-p'>Anonymous</p>
+               </div>
+               <p className='onetour__reviews-card-p'>That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to take warm coat</p>
             </div>
           </div>
           <button className='onetour__btns' onClick={() => SetModalActive(true)}>
