@@ -48,7 +48,7 @@ function OneTour() {
           </div>
           <div className="onetour__description">
             <p className='onetour__description__p'>Description</p>
-            <p className='onetour__description__title'>{data.destination}</p>
+            <p className='onetour__description__title'>{data.description}</p>
           </div>
           <div className="onetour__reviews">
             <p className='onetour__description__p'>Reviews</p>
